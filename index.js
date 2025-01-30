@@ -105,9 +105,9 @@ class Cell {
                this.age > this.lastReproduction + 100 && 
                this.energy > 70 &&
                this.health > 50 &&
-               ((this.type === "Anticorpo" && sameTypeCells < 20) || // Limite maior para anticorpos
-                (this.type === "Bactéria Invasora" && sameTypeCells < 15) || // Limite menor para patógenos
-                (sameTypeCells < 10)); // Limite para outras células
+               ((this.type === "Anticorpo" && sameTypeCells < 20) || 
+                (this.type === "Bactéria Invasora" && sameTypeCells < 15) ||
+                (sameTypeCells < 10));
     }
 
     updateBaseMovement(cells) {
@@ -259,7 +259,7 @@ class Cell {
     }
 
     draw(ctx) {
-        const scale = 1 - (this.z / 200); // Células mais distantes aparecem menores
+        const scale = 1 - (this.z / 200);
         const adjustedSize = this.size * scale;
 
         ctx.save();
@@ -399,23 +399,20 @@ function randomSpeed() {
     return (Math.random() - 0.5) * 4;
 }
 
-// Create cells
 let cells = [];
 const cellsPerType = 5;
 
-// Create original cell types
+
 ['AMOEBA', 'FLAGELLATE', 'MUSCLE', 'BACTERIUM', 'CILIATE'].forEach(type => {
     for (let i = 0; i < cellsPerType; i++) {
         cells.push(new Cell(type));
     }
 });
 
-// Create initial antibodies
 for (let i = 0; i < 10; i++) {
     cells.push(new Cell('ANTIBODY'));
 }
 
-// Periodic pathogen spawning
 function spawnPathogen() {
     const currentPathogens = cells.filter(c => c.type === "Bactéria Invasora").length;
     const currentAntibodies = cells.filter(c => c.type === "Anticorpo").length;
